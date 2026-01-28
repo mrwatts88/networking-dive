@@ -103,6 +103,7 @@ name = "networking-dive"
 version = "0.1.0"
 dependencies = [
  "dotenvy",
+ "libc",
  "tokio",
  "tracing",
  "tracing-subscriber",
