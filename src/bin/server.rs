@@ -1,8 +1,9 @@
-use std::{env, error::Error};
+use std::{env, error::Error, time::Duration};
 
 use tokio::{
     io::AsyncReadExt,
     net::{TcpListener, TcpStream},
+    time::sleep,
 };
 use tracing::{error, info};
 
@@ -57,5 +58,7 @@ async fn handle_connection(mut stream: TcpStream) {
                 break;
             }
         }
+
+        sleep(Duration::from_millis(100)).await;
     }
 }
