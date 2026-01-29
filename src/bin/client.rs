@@ -35,14 +35,21 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // loop and send messages every 5 seconds
     loop {
         counter += 1;
-        let msg = format!("Hello from client! Message #{} {}\n", counter, "X".repeat(4096));
+        let msg = format!(
+            "Hello from client! Message #{} {}\n",
+            counter,
+            "X".repeat(4096)
+        );
 
-        info!("sending {} bytes...", msg.len());
         let start = Instant::now();
         match stream.write_all(msg.as_bytes()).await {
             Ok(()) => {
                 let elapsed = start.elapsed();
-                info!(duration_us = elapsed.as_micros(), "sent");
+                let micros = elapsed.as_micros();
+                if micros > 500 {
+                    println!("xx\n\nxx");
+                }
+                info!(duration_us = micros, "sent");
                 // info!(duration_us = elapsed.as_micros(), "sent: {}", msg.trim());
             }
             Err(e) => {
